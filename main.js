@@ -10,6 +10,7 @@ function distance(a, b) {
 function Circle(game) {
     this.player = 1;
     this.radius = 20;
+    this.maxSpeed = 200;
     this.visualRadius = 500;
     this.colors = ["Red", "Green", "Blue", "White"];
     this.setNotIt();
@@ -17,8 +18,8 @@ function Circle(game) {
 
     this.velocity = { x: Math.random() * 1000, y: Math.random() * 1000 };
     var speed = Math.sqrt(this.velocity.x * this.velocity.x + this.velocity.y * this.velocity.y);
-    if (speed > maxSpeed) {
-        var ratio = maxSpeed / speed;
+    if (speed > this.maxSpeed) {
+        var ratio = this.maxSpeed / speed;
         this.velocity.x *= ratio;
         this.velocity.y *= ratio;
     }
@@ -29,6 +30,7 @@ Circle.prototype.constructor = Circle;
 
 Circle.prototype.setIt = function () {
     this.it = true;
+    this.maxSpeed = 80;
     this.color = 0;
     this.visualRadius = 500;
 };
@@ -106,12 +108,12 @@ Circle.prototype.update = function () {
             ent.x += ent.velocity.x * this.game.clockTick;
             ent.y += ent.velocity.y * this.game.clockTick;
             if (this.it) {
-                this.setNotIt();
+                //this.setNotIt();
                 ent.setIt();
             }
             else if (ent.it) {
                 this.setIt();
-                ent.setNotIt();
+                //ent.setNotIt();
             }
         }
 
@@ -123,8 +125,8 @@ Circle.prototype.update = function () {
                 this.velocity.x += difX * acceleration / (dist*dist);
                 this.velocity.y += difY * acceleration / (dist * dist);
                 var speed = Math.sqrt(this.velocity.x*this.velocity.x + this.velocity.y*this.velocity.y);
-                if (speed > maxSpeed) {
-                    var ratio = maxSpeed / speed;
+                if (speed > this.maxSpeed) {
+                    var ratio = this.maxSpeed / speed;
                     this.velocity.x *= ratio;
                     this.velocity.y *= ratio;
                 }
@@ -135,8 +137,8 @@ Circle.prototype.update = function () {
                 this.velocity.x -= difX * acceleration / (dist * dist);
                 this.velocity.y -= difY * acceleration / (dist * dist);
                 var speed = Math.sqrt(this.velocity.x * this.velocity.x + this.velocity.y * this.velocity.y);
-                if (speed > maxSpeed) {
-                    var ratio = maxSpeed / speed;
+                if (speed > this.maxSpeed) {
+                    var ratio = this.maxSpeed / speed;
                     this.velocity.x *= ratio;
                     this.velocity.y *= ratio;
                 }
